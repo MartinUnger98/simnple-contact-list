@@ -1,0 +1,16 @@
+@import '../../../../styles.scss';
+
+form {
+  margin-top: 2rem;
+  width: 100%;
+  @include flexStandard($g: 2rem, $fd: column);
+
+  app-input-field {
+    width: 100%;
+  }
+
+  div {
+    display: flex;
+    gap: 2rem;
+  }
+}

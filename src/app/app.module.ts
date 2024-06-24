@@ -1,16 +1,49 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ToastModule } from 'primeng/toast';
+import { RippleModule } from 'primeng/ripple';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ContactsComponent } from './components/contacts/contacts.component';
+import { SharedModule } from './components/shared-module/shared.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    InputTextModule,
+    ButtonModule,
+    CheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    ProgressSpinnerModule,
+    ToastModule,
+    RippleModule,
+    BrowserAnimationsModule,
+    AvatarModule,
+    AvatarGroupModule,
+    DialogModule,
+    ConfirmDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

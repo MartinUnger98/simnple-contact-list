@@ -1,0 +1,5 @@
+@import '../../../styles.scss';
+
+.contact-info {
+  @include flexStandard($ai: flex-start, $fd: column)
+}

@@ -1,0 +1,21 @@
+<div>
+  <p-inputGroup>
+    <input
+      [type]="type"
+      [value]="value"
+      (input)="onInputChange($event)"
+      pInputText
+      [placeholder]="placeholder"
+      [name]="name"
+      required
+    />
+    <p-inputGroupAddon (click)="onIconClick()">
+      <i class="pi" [ngClass]="iconDynamicClass ? iconDynamicClass : iconClass"></i>
+    </p-inputGroupAddon>
+  </p-inputGroup>
+  @if (errorMessage) {
+    <div class="error-text">
+      {{ errorMessage }}
+    </div>
+  }
+</div>

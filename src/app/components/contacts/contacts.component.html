@@ -1,0 +1,46 @@
+<section class="flexStandard">
+  <div>
+    <p-button
+      class="rounded"
+      label="Add new Contact"
+      icon="pi pi-user-plus"
+      iconPos="right"
+      severity="primary"
+      (click)="toggleDialog()"
+    ></p-button>
+
+    <h1>Contacts</h1>
+
+    @for (initial of contactsInitials;track initial) {
+      <h1>{{ initial }}</h1>
+      @for (contact of contacts;track contact){ @if(contact.firstname[0].toUpperCase()=== initial) {
+        <p-button  severity="secondary" (click)="showContactDetails(contact)">
+          <div class="flexStandardColumn">
+            <span>{{ contact.firstname }} {{ contact.lastname }}</span>
+          </div>
+        </p-button>
+      } }
+    }
+  </div>
+
+  @if(selectedContact) {
+  <div class="contact-info">
+    <h1>Contact Information</h1>
+    @for(key of getKeysSelectedContact(selectedContact); track key) {
+      <span>{{ formatKey(key) }}: {{ selectedContact[key ] }}</span>
+    }
+  </div>
+  }
+
+  @if(showDialog) {
+  <app-dialog
+    [contact]="selectedContact"
+    [isEditMode]="isEditMode"
+    (close)="closeDialog($event)"
+  ></app-dialog>
+  }
+</section>
+
+<p-confirmDialog />
+
+<p-toast />
