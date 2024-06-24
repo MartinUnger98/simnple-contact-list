@@ -39,9 +39,11 @@ export class DialogComponent {
   phoneNumberValidator = Validators.pattern(/^\+?[0-9]{8,}$/);
 
   createContactForm: FormGroup = new FormGroup({
-    name: new FormControl(''),
+    firstname: new FormControl(''),
+    lastname: new FormControl(''),
     email: new FormControl(''),
     phone: new FormControl(''),
+    address: new FormControl(''),
   });
 
   constructor(
@@ -51,10 +53,11 @@ export class DialogComponent {
 
   ngOnInit(): void {
     this.createContactForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.minLength(8), this.phoneNumberValidator,],
-      ],
+      phone: ['', [Validators.required, Validators.minLength(8), this.phoneNumberValidator,]],
+      address: ['', Validators.required],
     });
 
     if (this.isEditMode && this.contact) {
@@ -66,33 +69,27 @@ export class DialogComponent {
     return this.createContactForm.controls;
   }
 
-  getInitialsForAvatar(contact: string) {
-    let nameParts = contact.split(' ');
-    let initials = nameParts.slice(0, 2).map((part) => part[0].toUpperCase());
-    return initials.join('');
-  }
-
   async onSubmit() {
-    let createContactJson = this.createContactForm.value;
+    let contactJson = this.createContactForm.value;
     try {
       if (this.isEditMode) {
-        await this.editContact(createContactJson);
+        await this.editContact(contactJson);
       } else {
-        await this.createContact(createContactJson);
+        await this.createContact(contactJson);
       }
     } catch (error) {
       this.setToastErrorMessage(error);
     }
   }
 
-  async createContact(createContactJson: Contact) {
+  async createContact(contactJson: Contact) {
     this.isLoading = true;
     this.isLoading = false;
     this.resetForm();
     this.closeDialog(true);
   }
 
-  async editContact(createContactJson: Contact) {
+  async editContact(contactJson: Contact) {
     if (this.contact) {
       this.isLoading = true;
       this.isLoading = false;

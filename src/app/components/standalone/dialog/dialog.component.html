@@ -19,13 +19,24 @@
     >
       <app-input-field
         type="text"
-        formControlName="name"
-        placeholder="Name"
-        name="name"
-        autocomplete="name"
+        formControlName="firstname"
+        placeholder="Firstname"
+        name="firstname"
+        autocomplete="firstname"
         iconClass="pi pi-user"
         [errorMessage]="
-          f['name'].touched && f['name'].invalid ? 'Name is required' : ''
+          f['firstname'].touched && f['firstname'].invalid ? 'Firstame is required' : ''
+        "
+      ></app-input-field>
+      <app-input-field
+        type="text"
+        formControlName="lastname"
+        placeholder="Lastname"
+        name="lastname"
+        autocomplete="lastname"
+        iconClass="pi pi-user"
+        [errorMessage]="
+          f['lastname'].touched && f['lastname'].invalid ? 'lastname is required' : ''
         "
       ></app-input-field>
       <app-input-field
@@ -52,6 +63,17 @@
               ? 'Phonenumber is required'
               : 'Invalid phonenumber'
             : ''"
+      ></app-input-field>
+      <app-input-field
+        type="text"
+        formControlName="address"
+        placeholder="Address"
+        name="address"
+        autocomplete="address"
+        iconClass="pi pi-map"
+        [errorMessage]="
+          f['address'].touched && f['address'].invalid ? 'Address is required' : ''
+        "
       ></app-input-field>
       <div class="flex gap-8 mt-4">
         <p-button
