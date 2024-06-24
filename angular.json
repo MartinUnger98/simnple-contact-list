@@ -30,6 +30,8 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -65,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "simple-contact-list:build:production"
+              "buildTarget": "simple-contact-list:build:production"
             },
             "development": {
-              "browserTarget": "simple-contact-list:build:development"
+              "buildTarget": "simple-contact-list:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "simple-contact-list:build"
+            "buildTarget": "simple-contact-list:build"
           }
         },
         "test": {
