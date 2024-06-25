@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl, Forms
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { InputFieldComponent } from '../input-field/input-field.component';
-import { Contact } from 'src/app/components/contacts/contact-model';
+import { Contact } from 'src/app/store/contact.model';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
+import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-dialog',
@@ -49,6 +50,7 @@ export class DialogComponent {
   constructor(
     private messageService: MessageService,
     private formBuilder: FormBuilder,
+    private contactService: ContactService,
   ) {}
 
   ngOnInit(): void {
@@ -84,9 +86,15 @@ export class DialogComponent {
 
   async createContact(contactJson: Contact) {
     this.isLoading = true;
-    this.isLoading = false;
-    this.resetForm();
-    this.closeDialog(true);
+    try {
+      this.contactService.addContact(contactJson);
+      this.isLoading = false;
+      this.resetForm();
+      this.closeDialog(true);
+    } catch (error) {
+      this.isLoading = false;
+      this.setToastErrorMessage(error);
+    }
   }
 
   async editContact(contactJson: Contact) {

@@ -18,6 +18,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { SharedModule } from './components/shared-module/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { contactReducer } from './store/contact.reducer';
 
 
 @NgModule({
@@ -43,7 +46,9 @@ import { SharedModule } from './components/shared-module/shared.module';
     AvatarModule,
     AvatarGroupModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    StoreModule.forRoot({ contacts: contactReducer }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true })
   ],
   providers: [],
   bootstrap: [AppComponent]

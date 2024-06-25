@@ -1,8 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
-import { Contact } from './contact-model';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { Contact } from '../../store/contact.model';
 import { MessageService, ConfirmationService } from 'primeng/api';
-
+import { Store } from '@ngrx/store';
+import { addContact, loadContacts } from '../../store/contact.actions';
+import { selectAllContacts } from '../../store/contact.selectors';
+import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-contacts',
@@ -11,7 +14,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
   providers: [MessageService, ConfirmationService],
 })
 export class ContactsComponent implements OnInit, AfterViewInit, OnDestroy {
-  contacts: Contact[] = [
+  /* contacts: Contact[] = [
     {
       id: 1,
       firstname: "Martin",
@@ -36,7 +39,9 @@ export class ContactsComponent implements OnInit, AfterViewInit, OnDestroy {
       phone: "06647321321",
       address: "Hauptplatz 10"
     }
-  ];
+  ]; */
+
+  contacts: Contact[] = [];
   contactsInitials: string[] = [];
   showDialog: boolean = false;
   isEditMode: boolean = false;
@@ -47,19 +52,26 @@ export class ContactsComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-  ) {}
+    private store: Store,
+    private contactService: ContactService,
+  ) {  }
 
   async ngOnInit() {
+    this.contactService.loadContacts();
     this.subscribeObservables();
-    this.getContactsInitials();
   }
+
 
   ngAfterViewInit() {
     this.cdRef.detectChanges();
   }
 
   subscribeObservables() {
-
+    this.contactService.contacts$.pipe(takeUntil(this.destroyed$)).subscribe(contacts => {
+      this.contacts= contacts;
+      this.getContactsInitials();
+      this.cdRef.detectChanges();
+    })
   }
 
 
