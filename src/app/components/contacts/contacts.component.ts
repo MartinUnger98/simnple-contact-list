@@ -1,10 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Contact } from '../../store/contact.model';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { Store } from '@ngrx/store';
-import { addContact, loadContacts } from '../../store/contact.actions';
-import { selectAllContacts } from '../../store/contact.selectors';
 import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
@@ -14,33 +11,6 @@ import { ContactService } from 'src/app/services/contact.service';
   providers: [MessageService, ConfirmationService],
 })
 export class ContactsComponent implements OnInit, AfterViewInit, OnDestroy {
-  /* contacts: Contact[] = [
-    {
-      id: 1,
-      firstname: "Martin",
-      lastname: "Doe",
-      email: "martin@test.at",
-      phone: "06647897885",
-      address: "Bergstraße 1"
-    },
-    {
-      id: 2,
-      firstname: "Peter",
-      lastname: "Lustig",
-      email: "peter@test.at",
-      phone: "06647897342",
-      address: "Seeweg 2"
-    },
-    {
-      id: 1,
-      firstname: "Thomas",
-      lastname: "Müller",
-      email: "thomas@test.at",
-      phone: "06647321321",
-      address: "Hauptplatz 10"
-    }
-  ]; */
-
   contacts: Contact[] = [];
   contactsInitials: string[] = [];
   showDialog: boolean = false;
@@ -52,7 +22,6 @@ export class ContactsComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private store: Store,
     private contactService: ContactService,
   ) {  }
 
