@@ -50,7 +50,7 @@ describe('ContactsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load contacts on initialization', () => {
+  it('should load contacts', () => {
     expect(contactService.loadContacts).toHaveBeenCalled();
   });
 
@@ -73,15 +73,18 @@ describe('ContactsComponent', () => {
     expect(compiled.querySelector('.contact-info').textContent).toContain(component.selectedContact.firstname);
   });
 
-  it('should render contact initials and contact buttons correctly', () => {
-    fixture.detectChanges();
-    const buttons = fixture.debugElement.queryAll(By.css('p-button'));
-    const contactButton = buttons.find(button => button.nativeElement.textContent.includes('John Doe'));
-    expect(contactButton).toBeTruthy('No button contains the text "John Doe"');
-  });
+  it('should render contact initials and contact buttons', () => {
+  fixture.detectChanges();
+  const initials = fixture.debugElement.queryAll(By.css('h1')).map(el => el.nativeElement.textContent.trim());
+  expect(initials).toContain('J');
+  const buttons = fixture.debugElement.queryAll(By.css('p-button'));
+  const contactButton = buttons.find(button => button.nativeElement.textContent.includes('John Doe'));
+  expect(contactButton).toBeTruthy('No button contains the text "John Doe"');
+});
 
 
-  it('should close dialog and reset selectedContact on successful close event', () => {
+
+  it('should close dialog and reset selectedContact', () => {
     component.selectedContact = component.contacts[0];
     component.closeDialog(true);
     expect(component.showDialog).toBeFalse();

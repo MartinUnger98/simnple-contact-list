@@ -1,5 +1,17 @@
 @import '../../../styles.scss';
 
 .contact-info {
-  @include flexStandard($ai: flex-start, $fd: column)
+  @include flexStandard($ai: flex-start, $fd: column, $jc: flex-start);
+  margin-top: 42px;
+}
+
+section {
+  @include flexStandard($g:48px, $ai: flex-start);
+  @media (max-width: 800px) {
+    @include flexStandard($ai: center, $fd: column, $jc: center);
+  }
+}
+
+.contactListColumn {
+  @include flexStandard($g:16px, $fd: column);
 }

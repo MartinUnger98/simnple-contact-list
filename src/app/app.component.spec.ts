@@ -7,11 +7,13 @@ import { ContactService } from 'src/app/services/contact.service';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
+      BrowserModule,
       StoreModule.forRoot({}),
       ButtonModule,
       ConfirmDialogModule,
@@ -25,7 +27,8 @@ describe('AppComponent', () => {
       ContactService,
       MessageService,
       ConfirmationService,
-    ]
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
   }));
 
   it('should create the app', () => {
@@ -34,4 +37,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+  it('should render ContactsComponent', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-contacts')).not.toBeNull();
+  });
+
+  it(`should have as title 'simple-contact-list'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('simple-contact-list');
+  });
 });

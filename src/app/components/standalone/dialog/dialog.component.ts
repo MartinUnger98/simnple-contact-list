@@ -33,7 +33,6 @@ import { ContactService } from 'src/app/services/contact.service';
 })
 export class DialogComponent {
   @Input() contact: Contact | null = null;
-  @Input() isEditMode: boolean = false;
   @Output() close = new EventEmitter<boolean>();
   visible: boolean = true;
   isLoading: boolean = false;
@@ -61,10 +60,6 @@ export class DialogComponent {
       phone: ['', [Validators.required, Validators.minLength(8), this.phoneNumberValidator,]],
       address: ['', Validators.required],
     });
-
-    if (this.isEditMode && this.contact) {
-      this.createContactForm.patchValue(this.contact);
-    }
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -74,11 +69,7 @@ export class DialogComponent {
   async onSubmit() {
     let contactJson = this.createContactForm.value;
     try {
-      if (this.isEditMode) {
-        await this.editContact(contactJson);
-      } else {
-        await this.createContact(contactJson);
-      }
+      await this.createContact(contactJson);
     } catch (error) {
       this.setToastErrorMessage(error);
     }
@@ -97,14 +88,6 @@ export class DialogComponent {
     }
   }
 
-  async editContact(contactJson: Contact) {
-    if (this.contact) {
-      this.isLoading = true;
-      this.isLoading = false;
-      this.resetForm();
-      this.closeDialog(true);
-    }
-  }
 
   resetForm(): void {
     this.createContactForm.reset();
@@ -115,9 +98,7 @@ export class DialogComponent {
     if (error.status === 400 && error.error.email) {
       this.messageService.add({
         severity: 'error',
-        summary: this.isEditMode
-          ? 'Edit contact failed!'
-          : 'Creating contact failed!',
+        summary: 'Creating contact failed!',
         detail: error.error.email[0],
       });
     } else {
